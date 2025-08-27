@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://lablabs.github.io/bitnami-common-helm-chart/
+  version: 2.31.4
+digest: sha256:41534434bd519e24425a38d026a77793e12ed6fadad134b6befcc39263cc1fd2
+generated: "2025-08-25T15:17:17.470583+02:00"
