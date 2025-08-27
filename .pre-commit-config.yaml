@@ -12,7 +12,20 @@ repos:
     hooks:
       - id: helm-dependency-build
         name: run helm dependency build
-        entry: bash -c 'for dir in charts/*; do helm dependency build "$dir"; done'
+        entry: |
+          bash -c '
+            for chart in charts/*/Chart.yaml; do
+              yq '.dependencies[].repository' "$chart" | sort | uniq | while read -r repo; do
+                if [ -n "$repo" ]; then
+                  helm repo add "$(basename "$repo")" "$repo" 2>/dev/null || true
+                fi
+              done
+            done
+            helm repo update
+            for dir in charts/*; do
+              helm dependency build "$dir"
+            done
+          '
         language: system
         pass_filenames: false
 
