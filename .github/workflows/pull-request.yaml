@@ -121,7 +121,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Set up helm dependencies
-        run: helm dependency build --repository-config helm-repositories.yaml charts/${CHART_NAME}
+        run: helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
 
