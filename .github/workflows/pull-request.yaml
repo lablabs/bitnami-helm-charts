@@ -125,6 +125,15 @@ jobs:
         env:
           CHART_NAME: ${{ matrix.chart }}
 
+      - name: Construct chart-repos as env var
+        run: |
+          if [ -f charts/${CHART_NAME}/helm-repositories.yaml ]; then
+            export CT_REPOS_ARG="--chart-repos $(yq -r '.repositories[] | \"\(.name)=\(.url)\"' charts/${CHART_NAME}/helm-repositories.yaml | tr '\n' ' ')"
+          fi
+          echo "CT_REPOS_ARG=$CT_REPOS_ARG" >> $GITHUB_ENV
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0 # pragma: allowlist secret
         with:
@@ -133,7 +142,8 @@ jobs:
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
       - name: Run chart-testing (lint)
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} --helm-dependency-extra-args "--repository-config charts/${CHART_NAME}/helm-repositories.yaml"
+        # zizmor:ignore-template-injection
+        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} $CT_REPOS_ARG
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -144,7 +154,8 @@ jobs:
 
       - name: Run chart-testing (install)
         if: ${{ matrix.chart != 'common' }} # temporary
-        run: ct install --target-branch main --charts charts/${CHART_NAME} --helm-dependency-extra-args "--repository-config charts/${CHART_NAME}/helm-repositories.yaml"
+        # zizmor:ignore-template-injection
+        run: ct install --target-branch main --charts charts/${CHART_NAME} $CT_REPOS_ARG
         env:
           CHART_NAME: ${{ matrix.chart }}
 
