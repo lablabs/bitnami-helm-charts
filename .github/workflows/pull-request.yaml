@@ -131,12 +131,9 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
-          charts: charts/${CHART_NAME}
-        env:
-          CHART_NAME: ${{ matrix.chart }}
 
       - name: Run chart-testing (lint)
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
+        run: ct lint --config ct.yaml --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -146,7 +143,8 @@ jobs:
       # FIXME config: Place custom steps to install CRDs or other dependencies here
 
       - name: Run chart-testing (install)
-        run: ct install --target-branch main --charts charts/${CHART_NAME}
+        if: ${{ matrix.chart != 'common' }} # temporary
+        run: ct install --config ct.yaml --target-branch main --charts charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -179,7 +177,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build charts/${CHART_NAME}
+          helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME}
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 
