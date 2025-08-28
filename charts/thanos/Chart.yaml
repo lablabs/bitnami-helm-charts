@@ -23,3 +23,4 @@ keywords:
 name: thanos
 version: 17.3.1-devel
 icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/thanos/img/thanos-stack-220x234.png
+type: application

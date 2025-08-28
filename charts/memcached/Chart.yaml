@@ -21,3 +21,4 @@ keywords:
 name: memcached
 version: 7.9.7
 icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/memcached/img/memcached-stack-220x234.png
+type: application
