@@ -128,7 +128,7 @@ jobs:
       - name: Construct chart-repos as env var
         run: |
           if [ -f charts/${CHART_NAME}/helm-repositories.yaml ]; then
-            export CT_REPOS_ARG="--chart-repos $(yq -r '.repositories[] | \"\(.name)=\(.url)\"' charts/${CHART_NAME}/helm-repositories.yaml | tr '\n' ' ')"
+            export CT_REPOS_ARG="--chart-repos $(yq '.repositories[] | .name + "=" + .url' charts/${CHART_NAME}/helm-repositories.yaml | tr '\n' ' ')"
           fi
           echo "CT_REPOS_ARG=$CT_REPOS_ARG" >> $GITHUB_ENV
         env:
