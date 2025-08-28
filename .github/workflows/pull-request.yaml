@@ -133,7 +133,7 @@ jobs:
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
       - name: Run chart-testing (lint)
-        run: ct lint --config charts/${CHART_NAME}/ct.yaml --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
+        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} --helm-dependency-extra-args ["--repository-config charts/${CHART_NAME}/helm-repositories.yaml"]
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -144,7 +144,7 @@ jobs:
 
       - name: Run chart-testing (install)
         if: ${{ matrix.chart != 'common' }} # temporary
-        run: ct install --config charts/${CHART_NAME}/ct.yaml --target-branch main --charts charts/${CHART_NAME}
+        run: ct install --target-branch main --charts charts/${CHART_NAME} --helm-dependency-extra-args ["--repository-config charts/${CHART_NAME}/helm-repositories.yaml"]
         env:
           CHART_NAME: ${{ matrix.chart }}
 
