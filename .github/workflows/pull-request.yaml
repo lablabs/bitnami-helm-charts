@@ -99,7 +99,7 @@ jobs:
 
   chart-testing:
     runs-on: ubuntu-24.04
-    needs: [pre-commit, artifacthub-lint]
+    needs: [pre-commit, artifacthub-lint, metadata-collector]
     strategy:
       fail-fast: false
       matrix:
