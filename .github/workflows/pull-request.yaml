@@ -28,7 +28,6 @@ env:
   CHART_TESTING_YAMLLINT_VERSION: v1.37.1
   # renovate: datasource=github-releases depName=23andMe/Yamale
   CHART_TESTING_YAMALE_VERSION: 6.0.0
-  CHART_DEPENDENCIES_FILE: helm-repositories.yaml
 
 jobs:
   metadata-collector:
@@ -127,13 +126,6 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
-
-      # - name: Build helm dependencies
-      #   # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
-      #   # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
-      #   run: helm dependency build charts/${CHART_NAME}
-      #   env:
-      #     CHART_NAME: ${{ matrix.chart }}
 
       - name: Run chart-testing (lint)
         # zizmor:ignore-template-injection
