@@ -128,19 +128,16 @@ jobs:
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
-      - name: Build helm dependencies
-        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
-        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
-        run: |
-          # yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | sh
-          helm dependency build charts/${CHART_NAME}
-        env:
-          CHART_NAME: ${{ matrix.chart }}
-          CHART_DEPENDENCIES_FILE: ${{ env.CHART_DEPENDENCIES_FILE }}
+      # - name: Build helm dependencies
+      #   # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+      #   # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
+      #   run: helm dependency build charts/${CHART_NAME}
+      #   env:
+      #     CHART_NAME: ${{ matrix.chart }}
 
       - name: Run chart-testing (lint)
         # zizmor:ignore-template-injection
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} --skip-helm-dependencies
+        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -199,4 +196,3 @@ jobs:
         env:
           REPOSITORY_NAME: ${{ github.repository }}/${{ env.GITHUB_EVENT_REF_SLUG || env.GITHUB_HEAD_REF_SLUG }}
           CHART_NAME: ${{ matrix.chart }}
-          CHART_DEPENDENCIES_FILE: ${{ env.CHART_DEPENDENCIES_FILE }}
