@@ -132,8 +132,8 @@ jobs:
         # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
         # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
         run: |
-          yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | sh
-          helm dependency build --repository-config charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
+          # yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | sh
+          helm dependency build charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
           CHART_DEPENDENCIES_FILE: ${{ env.CHART_DEPENDENCIES_FILE }}
@@ -191,7 +191,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build --repository-config charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
+          helm dependency build charts/${CHART_NAME}
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 
