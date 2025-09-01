@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build --repository-config charts/${CHART_NAME}/${env.CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
+          helm dependency build --repository-config charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 
