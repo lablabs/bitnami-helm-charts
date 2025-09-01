@@ -12,7 +12,7 @@ repos:
     hooks:
       - id: helm-dependency-build
         name: run helm dependency build
-        entry: sh -c 'for dir in charts/*; do helm dependency build "$dir" --repository-config $dir/helm-repositories.yaml --skip-refresh; done'
+        entry: sh -c 'for dir in charts/*; do helm dependency build "$dir" --skip-refresh; done'
         language: system
         pass_filenames: false
 
