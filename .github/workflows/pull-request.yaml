@@ -121,15 +121,6 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      # - name: Construct chart-repos as env var
-      #   run: |
-      #     if [ -f charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} ]; then
-      #       export CT_REPOS_ARG="--chart-repos $(yq '.repositories[] | .name + "=" + .url' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | tr '\n' ' ')"
-      #     fi
-      #     echo "CT_REPOS_ARG=$CT_REPOS_ARG" >> $GITHUB_ENV
-      #   env:
-      #     CHART_NAME: ${{ matrix.chart }}
-
       - name: Set up chart-testing
         uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0 # pragma: allowlist secret
         with:
@@ -138,11 +129,14 @@ jobs:
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
       - name: Build helm dependencies
+        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
         run: |
           yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | sh
           helm dependency build --repository-config charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
         env:
           CHART_NAME: ${{ matrix.chart }}
+          CHART_DEPENDENCIES_FILE: ${{ env.CHART_DEPENDENCIES_FILE }}
 
       - name: Run chart-testing (lint)
         # zizmor:ignore-template-injection
@@ -156,12 +150,13 @@ jobs:
       # FIXME config: Place custom steps to install CRDs or other dependencies here
 
       - name: Determine chart type
-        run: echo "APPLICATION_CHART_TYPE=$(test "$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" = "application" && echo true || echo false)" >> $GITHUB_ENV
+        id: chart-type
+        run: echo "chart_type=$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" >> $GITHUB_OUTPUT
         env:
           CHART_NAME: ${{ matrix.chart }}
 
       - name: Run chart-testing (install)
-        if: ${{ env.APPLICATION_CHART_TYPE == 'true' }} # Installation test for application charts only
+        if: ${{ steps.chart-type.outputs.chart_type == 'application' }} # Only run installation tests for application charts, skip library charts
         # zizmor:ignore-template-injection
         run: ct install --target-branch main --charts charts/${CHART_NAME}
         env:
@@ -204,3 +199,4 @@ jobs:
         env:
           REPOSITORY_NAME: ${{ github.repository }}/${{ env.GITHUB_EVENT_REF_SLUG || env.GITHUB_HEAD_REF_SLUG }}
           CHART_NAME: ${{ matrix.chart }}
+          CHART_DEPENDENCIES_FILE: ${{ env.CHART_DEPENDENCIES_FILE }}
