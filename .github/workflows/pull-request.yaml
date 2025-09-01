@@ -127,11 +127,11 @@ jobs:
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
-      - name: Build helm dependencies
+      - name: Build https Helm dependencies
         # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
         # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
         run: |
-          if ! yq -e '.dependencies[] | select(.repository | match("oci://"))' "$dir/Chart.yaml"; then
+          if yq -e '.dependencies[] | select(.repository | match("https://"))' charts/${CHART_NAME}/Chart.yaml; then
             yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
             helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
           fi
@@ -144,19 +144,20 @@ jobs:
         env:
           CHART_NAME: ${{ matrix.chart }}
 
+      - name: Determine chart type
+        id: chart-type
+        run: echo "type=$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" >> $GITHUB_OUTPUT
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Create kind cluster
+        if: ${{ steps.chart-type.outputs.type == 'application' }} # Only run installation tests for application charts, skip library charts
         uses: helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3 # v1.12.0 # pragma: allowlist secret
 
       # FIXME config: Place custom steps to install CRDs or other dependencies here
 
-      - name: Determine chart type
-        id: chart-type
-        run: echo "chart_type=$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" >> $GITHUB_OUTPUT
-        env:
-          CHART_NAME: ${{ matrix.chart }}
-
       - name: Run chart-testing (install)
-        if: ${{ steps.chart-type.outputs.chart_type == 'application' }} # Only run installation tests for application charts, skip library charts
+        if: ${{ steps.chart-type.outputs.type == 'application' }} # Only run installation tests for application charts, skip library charts
         # zizmor:ignore-template-injection
         run: ct install --target-branch main --charts charts/${CHART_NAME}
         env:
