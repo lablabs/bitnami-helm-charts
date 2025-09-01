@@ -131,8 +131,10 @@ jobs:
         # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
         # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
         run: |
-          yq -r '.repositories[] | select(.url | startswith("oci://") | not) | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
-          helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+          if ! yq -e '.dependencies[] | select(.repository | match("oci://"))' "$dir/Chart.yaml"; then
+            yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
+            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+          fi
         env:
           CHART_NAME: ${{ matrix.chart }}
 
