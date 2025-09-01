@@ -8,7 +8,7 @@ Memcached is an high-performance, distributed memory object caching system, gene
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://lablabs.github.io/bitnami-common-helm-chart/ | common | 2.31.4 |
+| oci://ghcr.io/lablabs/bitnami-helm-charts | common | 2.31.4 |
 
 ## Values
 
