@@ -130,7 +130,7 @@ jobs:
       - name: Build Helm dependencies
         # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
         # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
-        run: ./scripts/helm-dependency-build.sh $CHART_NAME
+        run: scripts/helm-dependency-build.sh $CHART_NAME
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -186,7 +186,7 @@ jobs:
       - name: Build Helm dependencies
         # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
         # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
-        run: ./scripts/helm-dependency-build.sh $CHART_NAME
+        run: scripts/helm-dependency-build.sh $CHART_NAME
         env:
           CHART_NAME: ${{ matrix.chart }}
 
