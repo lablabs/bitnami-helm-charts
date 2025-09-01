@@ -133,7 +133,7 @@ jobs:
         run: |
           if yq -e '.dependencies[] | select(.repository | match("https://"))' charts/${CHART_NAME}/Chart.yaml; then
             yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
-            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME}
           fi
         env:
           CHART_NAME: ${{ matrix.chart }}
@@ -193,7 +193,9 @@ jobs:
         run: |
           if yq -e '.dependencies[] | select(.repository | match("https://"))' charts/${CHART_NAME}/Chart.yaml; then
             yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
-            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME}
+          else
+            helm dependency build charts/${CHART_NAME} --skip-refresh
           fi
         env:
           CHART_NAME: ${{ matrix.chart }}
