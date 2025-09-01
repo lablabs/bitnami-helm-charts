@@ -155,8 +155,13 @@ jobs:
 
       # FIXME config: Place custom steps to install CRDs or other dependencies here
 
+      - name: Determine chart type
+        run: echo "APPLICATION_CHART_TYPE=$(test "$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" = "application" && echo true || echo false)" >> $GITHUB_ENV
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Run chart-testing (install)
-        if: ${{ matrix.chart != 'common' }} # temporary
+        if: ${{ env.APPLICATION_CHART_TYPE == 'true' }} # Installation test for application charts only
         # zizmor:ignore-template-injection
         run: ct install --target-branch main --charts charts/${CHART_NAME}
         env:
