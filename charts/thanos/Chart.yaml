@@ -10,7 +10,7 @@ apiVersion: v2
 appVersion: 0.39.2
 dependencies:
 - name: common
-  repository: oci://ghcr.io/lablabs/bitnami-helm-charts
+  repository: https://lablabs.github.io/bitnami-common-helm-chart/
   version: 2.31.4
 description: Thanos is a highly available metrics system that can be added on top
   of existing Prometheus deployments, providing a global query view across all Prometheus

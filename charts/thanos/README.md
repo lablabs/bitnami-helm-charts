@@ -8,7 +8,7 @@ Thanos is a highly available metrics system that can be added on top of existing
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/lablabs/bitnami-helm-charts | common | 2.31.4 |
+| https://lablabs.github.io/bitnami-common-helm-chart/ | common | 2.31.4 |
 
 ## Values
 

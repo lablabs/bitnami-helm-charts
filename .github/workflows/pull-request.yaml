@@ -127,6 +127,15 @@ jobs:
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
+      - name: Build helm dependencies
+        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
+        run: |
+          yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
+          helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Run chart-testing (lint)
         # zizmor:ignore-template-injection
         run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
@@ -180,7 +189,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build charts/${CHART_NAME}
+          helm dependency build charts/${CHART_NAME} --repository-config charts/${CHART_NAME}/helm-repositories.yaml --skip-refresh
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 
