@@ -187,12 +187,22 @@ jobs:
       - name: GitHub Slug Action
         uses: rlespinasse/github-slug-action@955b5ba4560860f8a633bd24190941f16016e42c # v5.1.0
 
+      - name: Build https Helm dependencies
+        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
+        run: |
+          if yq -e '.dependencies[] | select(.repository | match("https://"))' charts/${CHART_NAME}/Chart.yaml; then
+            yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' charts/${CHART_NAME}/helm-repositories.yaml | sh
+            helm dependency build --repository-config charts/${CHART_NAME}/helm-repositories.yaml charts/${CHART_NAME} --skip-refresh
+          fi
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Publish Helm chart
         # FIXME config: Add dependency repositories
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build charts/${CHART_NAME} --repository-config charts/${CHART_NAME}/helm-repositories.yaml --skip-refresh
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 
