@@ -121,14 +121,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Construct chart-repos as env var
-        run: |
-          if [ -f charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} ]; then
-            export CT_REPOS_ARG="--chart-repos $(yq '.repositories[] | .name + "=" + .url' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | tr '\n' ' ')"
-          fi
-          echo "CT_REPOS_ARG=$CT_REPOS_ARG" >> $GITHUB_ENV
-        env:
-          CHART_NAME: ${{ matrix.chart }}
+      # - name: Construct chart-repos as env var
+      #   run: |
+      #     if [ -f charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} ]; then
+      #       export CT_REPOS_ARG="--chart-repos $(yq '.repositories[] | .name + "=" + .url' charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} | tr '\n' ' ')"
+      #     fi
+      #     echo "CT_REPOS_ARG=$CT_REPOS_ARG" >> $GITHUB_ENV
+      #   env:
+      #     CHART_NAME: ${{ matrix.chart }}
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0 # pragma: allowlist secret
@@ -137,9 +137,14 @@ jobs:
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
+      - name: Build helm dependencies
+        run: helm dependency build --repository-config charts/${CHART_NAME}/${CHART_DEPENDENCIES_FILE} charts/${CHART_NAME}
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Run chart-testing (lint)
         # zizmor:ignore-template-injection
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} $CT_REPOS_ARG
+        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME} --skip-helm-dependencies
         env:
           CHART_NAME: ${{ matrix.chart }}
 
@@ -151,7 +156,7 @@ jobs:
       - name: Run chart-testing (install)
         if: ${{ matrix.chart != 'common' }} # temporary
         # zizmor:ignore-template-injection
-        run: ct install --target-branch main --charts charts/${CHART_NAME} $CT_REPOS_ARG
+        run: ct install --target-branch main --charts charts/${CHART_NAME} --skip-helm-dependencies
         env:
           CHART_NAME: ${{ matrix.chart }}
 
