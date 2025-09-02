@@ -1,6 +1,6 @@
 # prometheus
 
-![Version: 9.5.13](https://img.shields.io/badge/Version-9.5.13-informational?style=flat-square) ![AppVersion: 0.76.1](https://img.shields.io/badge/AppVersion-0.76.1-informational?style=flat-square)
+![Version: 11.2.16](https://img.shields.io/badge/Version-11.2.16-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
 
 Prometheus Operator provides easy monitoring definitions for Kubernetes services and deployment and management of Prometheus instances.
 
@@ -18,8 +18,9 @@ Kubernetes: `>= 1.16.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
+| file://./charts/kube-prometheus-crds | kube-prometheus-crds | 0.x.x |
 | oci://ghcr.io/lablabs/bitnami-helm-charts | common | 2.31.4 |
-| oci://registry-1.docker.io/bitnamicharts | kube-state-metrics | 4.x.x |
+| oci://registry-1.docker.io/bitnamicharts | kube-state-metrics | 5.x.x |
 | oci://registry-1.docker.io/bitnamicharts | node-exporter | 4.x.x |
 
 ## Values
@@ -62,7 +63,7 @@ Kubernetes: `>= 1.16.0-0`
 | alertmanager.image.pullSecrets | list | `[]` |  |
 | alertmanager.image.registry | string | `"docker.io"` |  |
 | alertmanager.image.repository | string | `"bitnami/alertmanager"` |  |
-| alertmanager.image.tag | string | `"0.27.0-debian-12-r20"` |  |
+| alertmanager.image.tag | string | `"0.28.1-debian-12-r13"` |  |
 | alertmanager.ingress.annotations | object | `{}` |  |
 | alertmanager.ingress.apiVersion | string | `""` |  |
 | alertmanager.ingress.enabled | bool | `false` |  |
@@ -197,7 +198,7 @@ Kubernetes: `>= 1.16.0-0`
 | blackboxExporter.image.pullSecrets | list | `[]` |  |
 | blackboxExporter.image.registry | string | `"docker.io"` |  |
 | blackboxExporter.image.repository | string | `"bitnami/blackbox-exporter"` |  |
-| blackboxExporter.image.tag | string | `"0.25.0-debian-12-r14"` |  |
+| blackboxExporter.image.tag | string | `"0.27.0-debian-12-r2"` |  |
 | blackboxExporter.initContainers | list | `[]` |  |
 | blackboxExporter.lifecycleHooks | object | `{}` |  |
 | blackboxExporter.livenessProbe.enabled | bool | `true` |  |
@@ -292,7 +293,7 @@ Kubernetes: `>= 1.16.0-0`
 | global.defaultStorageClass | string | `""` |  |
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
-| global.storageClass | string | `""` |  |
+| global.security.allowInsecureImages | bool | `false` |  |
 | kube-state-metrics.serviceMonitor.enabled | bool | `true` |  |
 | kube-state-metrics.serviceMonitor.honorLabels | bool | `true` |  |
 | kubeApiServer.enabled | bool | `true` |  |
@@ -411,7 +412,7 @@ Kubernetes: `>= 1.16.0-0`
 | operator.image.pullSecrets | list | `[]` |  |
 | operator.image.registry | string | `"docker.io"` |  |
 | operator.image.repository | string | `"bitnami/prometheus-operator"` |  |
-| operator.image.tag | string | `"0.76.1-debian-12-r0"` |  |
+| operator.image.tag | string | `"0.84.0-debian-12-r1"` |  |
 | operator.initContainers | list | `[]` |  |
 | operator.kubeletService.enabled | bool | `true` |  |
 | operator.kubeletService.namespace | string | `"kube-system"` |  |
@@ -532,9 +533,6 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.additionalScrapeConfigs.external.name | string | `""` |  |
 | prometheus.additionalScrapeConfigs.internal.jobList | list | `[]` |  |
 | prometheus.additionalScrapeConfigs.type | string | `"external"` |  |
-| prometheus.additionalScrapeConfigsExternal.enabled | bool | `false` |  |
-| prometheus.additionalScrapeConfigsExternal.key | string | `""` |  |
-| prometheus.additionalScrapeConfigsExternal.name | string | `""` |  |
 | prometheus.affinity | object | `{}` |  |
 | prometheus.alertingEndpoints | list | `[]` |  |
 | prometheus.configMaps | list | `[]` |  |
@@ -570,6 +568,40 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.containerSecurityContext.seLinuxOptions | object | `{}` |  |
 | prometheus.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | prometheus.containers | list | `[]` |  |
+| prometheus.defaultRules.create | bool | `true` |  |
+| prometheus.defaultRules.rules.alertmanager | bool | `true` |  |
+| prometheus.defaultRules.rules.configReloaders | bool | `true` |  |
+| prometheus.defaultRules.rules.etcd | bool | `true` |  |
+| prometheus.defaultRules.rules.general | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerCpuUsageSecondsTotal | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerMemoryCache | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerMemoryRss | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerMemorySwap | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerMemoryWorkingSetBytes | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sContainerResource | bool | `true` |  |
+| prometheus.defaultRules.rules.k8sPodOwner | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeApiserverAvailability | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeApiserverBurnrate | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeApiserverHistogram | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeApiserverSlos | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeControllerManager | bool | `true` |  |
+| prometheus.defaultRules.rules.kubePrometheusGeneral | bool | `true` |  |
+| prometheus.defaultRules.rules.kubePrometheusNodeRecording | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeProxy | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeSchedulerAlerting | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeSchedulerRecording | bool | `true` |  |
+| prometheus.defaultRules.rules.kubeStateMetrics | bool | `true` |  |
+| prometheus.defaultRules.rules.kubelet | bool | `true` |  |
+| prometheus.defaultRules.rules.kubernetesApps | bool | `true` |  |
+| prometheus.defaultRules.rules.kubernetesResources | bool | `true` |  |
+| prometheus.defaultRules.rules.kubernetesStorage | bool | `true` |  |
+| prometheus.defaultRules.rules.kubernetesSystem | bool | `true` |  |
+| prometheus.defaultRules.rules.network | bool | `true` |  |
+| prometheus.defaultRules.rules.node | bool | `true` |  |
+| prometheus.defaultRules.rules.nodeExporterAlerting | bool | `true` |  |
+| prometheus.defaultRules.rules.nodeExporterRecording | bool | `true` |  |
+| prometheus.defaultRules.rules.prometheus | bool | `true` |  |
+| prometheus.defaultRules.rules.prometheusOperator | bool | `true` |  |
 | prometheus.disableCompaction | bool | `false` |  |
 | prometheus.enableAdminAPI | bool | `false` |  |
 | prometheus.enableFeatures | list | `[]` |  |
@@ -584,7 +616,7 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.image.pullSecrets | list | `[]` |  |
 | prometheus.image.registry | string | `"docker.io"` |  |
 | prometheus.image.repository | string | `"bitnami/prometheus"` |  |
-| prometheus.image.tag | string | `"2.54.1-debian-12-r2"` |  |
+| prometheus.image.tag | string | `"3.5.0-debian-12-r1"` |  |
 | prometheus.ingress.annotations | object | `{}` |  |
 | prometheus.ingress.apiVersion | string | `""` |  |
 | prometheus.ingress.enabled | bool | `false` |  |
@@ -611,6 +643,7 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.livenessProbe.timeoutSeconds | int | `3` |  |
 | prometheus.logFormat | string | `"logfmt"` |  |
 | prometheus.logLevel | string | `"info"` |  |
+| prometheus.nameValidationScheme | string | `"UTF8"` |  |
 | prometheus.networkPolicy.allowExternal | bool | `true` |  |
 | prometheus.networkPolicy.allowExternalEgress | bool | `true` |  |
 | prometheus.networkPolicy.enabled | bool | `true` |  |
@@ -669,6 +702,7 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.ruleNamespaceSelector | object | `{}` |  |
 | prometheus.ruleSelector | object | `{}` |  |
 | prometheus.sampleLimit | string | `""` |  |
+| prometheus.scrapeClasses | list | `[]` |  |
 | prometheus.scrapeConfigNamespaceSelector | object | `{}` |  |
 | prometheus.scrapeConfigSelector | object | `{}` |  |
 | prometheus.scrapeInterval | string | `""` |  |
@@ -722,13 +756,16 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.thanos.containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | prometheus.thanos.create | bool | `false` |  |
 | prometheus.thanos.extraArgs | list | `[]` |  |
+| prometheus.thanos.extraEnvVars | list | `[]` |  |
+| prometheus.thanos.extraEnvVarsCM | string | `""` |  |
+| prometheus.thanos.extraEnvVarsSecret | string | `""` |  |
 | prometheus.thanos.extraVolumeMounts | list | `[]` |  |
 | prometheus.thanos.image.digest | string | `""` |  |
 | prometheus.thanos.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheus.thanos.image.pullSecrets | list | `[]` |  |
 | prometheus.thanos.image.registry | string | `"docker.io"` |  |
 | prometheus.thanos.image.repository | string | `"bitnami/thanos"` |  |
-| prometheus.thanos.image.tag | string | `"0.36.1-debian-12-r1"` |  |
+| prometheus.thanos.image.tag | string | `"0.39.2-debian-12-r0"` |  |
 | prometheus.thanos.ingress.annotations | object | `{}` |  |
 | prometheus.thanos.ingress.apiVersion | string | `""` |  |
 | prometheus.thanos.ingress.enabled | bool | `false` |  |
@@ -772,9 +809,17 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.thanos.service.loadBalancerSourceRanges | list | `[]` |  |
 | prometheus.thanos.service.nodePorts.grpc | string | `""` |  |
 | prometheus.thanos.service.ports.grpc | int | `10901` |  |
+| prometheus.thanos.service.ports.http | int | `10902` |  |
 | prometheus.thanos.service.sessionAffinity | string | `"None"` |  |
 | prometheus.thanos.service.sessionAffinityConfig | object | `{}` |  |
 | prometheus.thanos.service.type | string | `"ClusterIP"` |  |
+| prometheus.thanos.serviceMonitor.enabled | bool | `false` |  |
+| prometheus.thanos.serviceMonitor.interval | string | `""` |  |
+| prometheus.thanos.serviceMonitor.jobLabel | string | `""` |  |
+| prometheus.thanos.serviceMonitor.metricRelabelings | list | `[]` |  |
+| prometheus.thanos.serviceMonitor.path | string | `"/metrics"` |  |
+| prometheus.thanos.serviceMonitor.relabelings | list | `[]` |  |
+| prometheus.thanos.serviceMonitor.sampleLimit | string | `""` |  |
 | prometheus.tolerations | list | `[]` |  |
 | prometheus.topologySpreadConstraints | list | `[]` |  |
 | prometheus.volumeMounts | list | `[]` |  |
@@ -782,6 +827,125 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.walCompression | bool | `false` |  |
 | rbac.create | bool | `true` |  |
 | rbac.pspEnabled | bool | `true` |  |
+| thanosRuler.additionalArgs[0].name | string | `"grpc-address"` |  |
+| thanosRuler.additionalArgs[0].value | string | `"0.0.0.0:{{ .Values.thanosRuler.containerPorts.grpc }}"` |  |
+| thanosRuler.additionalArgs[1].name | string | `"http-address"` |  |
+| thanosRuler.additionalArgs[1].value | string | `"0.0.0.0:{{ .Values.thanosRuler.containerPorts.http }}"` |  |
+| thanosRuler.affinity | object | `{}` |  |
+| thanosRuler.alertDropLabels | list | `[]` |  |
+| thanosRuler.alertQueryUrl | string | `""` |  |
+| thanosRuler.alertmanagersConfig.config | object | `{}` |  |
+| thanosRuler.alertmanagersConfig.existingSecret.key | string | `""` |  |
+| thanosRuler.alertmanagersConfig.existingSecret.name | string | `""` |  |
+| thanosRuler.clusterName | string | `""` |  |
+| thanosRuler.containerPorts.grpc | int | `10901` |  |
+| thanosRuler.containerPorts.http | int | `10902` |  |
+| thanosRuler.containers | list | `[]` |  |
+| thanosRuler.enabled | bool | `false` |  |
+| thanosRuler.evalInterval | string | `"1m"` |  |
+| thanosRuler.evaluationInterval | string | `""` |  |
+| thanosRuler.externalPrefix | string | `""` |  |
+| thanosRuler.image.digest | string | `""` |  |
+| thanosRuler.image.pullPolicy | string | `"IfNotPresent"` |  |
+| thanosRuler.image.pullSecrets | list | `[]` |  |
+| thanosRuler.image.registry | string | `"docker.io"` |  |
+| thanosRuler.image.repository | string | `"bitnami/thanos"` |  |
+| thanosRuler.image.tag | string | `"0.39.2-debian-12-r0"` |  |
+| thanosRuler.ingress.annotations | object | `{}` |  |
+| thanosRuler.ingress.apiVersion | string | `""` |  |
+| thanosRuler.ingress.enabled | bool | `false` |  |
+| thanosRuler.ingress.extraHosts | list | `[]` |  |
+| thanosRuler.ingress.extraRules | list | `[]` |  |
+| thanosRuler.ingress.extraTls | list | `[]` |  |
+| thanosRuler.ingress.hostname | string | `"thanos-ruler.local"` |  |
+| thanosRuler.ingress.ingressClassName | string | `""` |  |
+| thanosRuler.ingress.labels | object | `{}` |  |
+| thanosRuler.ingress.path | string | `"/"` |  |
+| thanosRuler.ingress.pathType | string | `"ImplementationSpecific"` |  |
+| thanosRuler.ingress.secrets | list | `[]` |  |
+| thanosRuler.ingress.selfSigned | bool | `false` |  |
+| thanosRuler.ingress.tls | bool | `false` |  |
+| thanosRuler.initContainers | list | `[]` |  |
+| thanosRuler.labels | object | `{}` |  |
+| thanosRuler.listenLocal | bool | `false` |  |
+| thanosRuler.logFormat | string | `"logfmt"` |  |
+| thanosRuler.logLevel | string | `"info"` |  |
+| thanosRuler.networkPolicy.allowExternal | bool | `true` |  |
+| thanosRuler.networkPolicy.allowExternalEgress | bool | `true` |  |
+| thanosRuler.networkPolicy.enabled | bool | `true` |  |
+| thanosRuler.networkPolicy.extraEgress | list | `[]` |  |
+| thanosRuler.networkPolicy.extraIngress | list | `[]` |  |
+| thanosRuler.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
+| thanosRuler.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
+| thanosRuler.nodeAffinityPreset.key | string | `""` |  |
+| thanosRuler.nodeAffinityPreset.type | string | `""` |  |
+| thanosRuler.nodeAffinityPreset.values | list | `[]` |  |
+| thanosRuler.nodeSelector | object | `{}` |  |
+| thanosRuler.objectStorageConfig.config | object | `{}` |  |
+| thanosRuler.objectStorageConfig.existingSecret.key | string | `""` |  |
+| thanosRuler.objectStorageConfig.existingSecret.name | string | `""` |  |
+| thanosRuler.paused | bool | `false` |  |
+| thanosRuler.pdb.create | bool | `true` |  |
+| thanosRuler.pdb.maxUnavailable | string | `""` |  |
+| thanosRuler.pdb.minAvailable | string | `""` |  |
+| thanosRuler.podAffinityPreset | string | `""` |  |
+| thanosRuler.podAntiAffinityPreset | string | `"soft"` |  |
+| thanosRuler.podMetadata.annotations | object | `{}` |  |
+| thanosRuler.podMetadata.labels | object | `{}` |  |
+| thanosRuler.podSecurityContext.enabled | bool | `true` |  |
+| thanosRuler.podSecurityContext.fsGroup | int | `1001` |  |
+| thanosRuler.podSecurityContext.fsGroupChangePolicy | string | `"Always"` |  |
+| thanosRuler.podSecurityContext.supplementalGroups | list | `[]` |  |
+| thanosRuler.podSecurityContext.sysctls | list | `[]` |  |
+| thanosRuler.portName | string | `"http"` |  |
+| thanosRuler.priorityClassName | string | `""` |  |
+| thanosRuler.queryConfig.config | list | `[]` |  |
+| thanosRuler.queryConfig.existingSecret.key | string | `"query-config.yaml"` |  |
+| thanosRuler.queryConfig.existingSecret.name | string | `""` |  |
+| thanosRuler.remoteWrite | object | `{}` |  |
+| thanosRuler.replicaCount | int | `1` |  |
+| thanosRuler.resources | object | `{}` |  |
+| thanosRuler.resourcesPreset | string | `"nano"` |  |
+| thanosRuler.retention | string | `"24h"` |  |
+| thanosRuler.routePrefix | string | `"/"` |  |
+| thanosRuler.ruleNamespaceSelector | object | `{}` |  |
+| thanosRuler.ruleSelector | object | `{}` |  |
+| thanosRuler.service.additionalHeadless | bool | `false` |  |
+| thanosRuler.service.annotations | object | `{}` |  |
+| thanosRuler.service.clusterIP | string | `""` |  |
+| thanosRuler.service.externalTrafficPolicy | string | `"Cluster"` |  |
+| thanosRuler.service.extraPorts | list | `[]` |  |
+| thanosRuler.service.headless.annotations | object | `{}` |  |
+| thanosRuler.service.labelSelectorsOverride | object | `{}` |  |
+| thanosRuler.service.labels | object | `{}` |  |
+| thanosRuler.service.loadBalancerIP | string | `""` |  |
+| thanosRuler.service.loadBalancerSourceRanges | list | `[]` |  |
+| thanosRuler.service.nodePorts.grpc | string | `""` |  |
+| thanosRuler.service.nodePorts.http | string | `""` |  |
+| thanosRuler.service.ports.grpc | int | `10901` |  |
+| thanosRuler.service.ports.http | int | `10902` |  |
+| thanosRuler.service.type | string | `"ClusterIP"` |  |
+| thanosRuler.serviceAccount.annotations | object | `{}` |  |
+| thanosRuler.serviceAccount.automountServiceAccountToken | bool | `false` |  |
+| thanosRuler.serviceAccount.create | bool | `true` |  |
+| thanosRuler.serviceAccount.name | string | `""` |  |
+| thanosRuler.serviceMonitor.annotations | object | `{}` |  |
+| thanosRuler.serviceMonitor.enabled | bool | `true` |  |
+| thanosRuler.serviceMonitor.extraParameters | object | `{}` |  |
+| thanosRuler.serviceMonitor.https | bool | `false` |  |
+| thanosRuler.serviceMonitor.interval | string | `""` |  |
+| thanosRuler.serviceMonitor.jobLabel | string | `""` |  |
+| thanosRuler.serviceMonitor.labels | object | `{}` |  |
+| thanosRuler.serviceMonitor.metricRelabelings | list | `[]` |  |
+| thanosRuler.serviceMonitor.relabelings | list | `[]` |  |
+| thanosRuler.serviceMonitor.sampleLimit | string | `""` |  |
+| thanosRuler.serviceMonitor.scrapeTimeout | string | `""` |  |
+| thanosRuler.storage | object | `{}` |  |
+| thanosRuler.tolerations | list | `[]` |  |
+| thanosRuler.topologySpreadConstraints | list | `[]` |  |
+| thanosRuler.volumeMounts | list | `[]` |  |
+| thanosRuler.volumes | list | `[]` |  |
+| thanosRuler.web | object | `{}` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

@@ -1,6 +1,6 @@
 # kube-state-metrics
 
-![Version: 4.2.12](https://img.shields.io/badge/Version-4.2.12-informational?style=flat-square) ![AppVersion: 2.13.0](https://img.shields.io/badge/AppVersion-2.13.0-informational?style=flat-square)
+![Version: 5.0.6](https://img.shields.io/badge/Version-5.0.6-informational?style=flat-square) ![AppVersion: 2.15.0](https://img.shields.io/badge/AppVersion-2.15.0-informational?style=flat-square)
 
 kube-state-metrics is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.
 
@@ -20,7 +20,7 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/lablabs/bitnami-helm-charts | common | 2.31.4 |
+| oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 
 ## Values
 
@@ -46,6 +46,8 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 | containerSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | customLivenessProbe | object | `{}` |  |
 | customReadinessProbe | object | `{}` |  |
+| customResourceState.configuration | object | `{}` |  |
+| customResourceState.enabled | bool | `false` |  |
 | customStartupProbe | object | `{}` |  |
 | diagnosticMode.args[0] | string | `"infinity"` |  |
 | diagnosticMode.command[0] | string | `"sleep"` |  |
@@ -61,6 +63,7 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 | global.compatibility.openshift.adaptSecurityContext | string | `"auto"` |  |
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
+| global.security.allowInsecureImages | bool | `false` |  |
 | hostAliases | list | `[]` |  |
 | hostNetwork | bool | `false` |  |
 | image.digest | string | `""` |  |
@@ -68,7 +71,7 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/kube-state-metrics"` |  |
-| image.tag | string | `"2.13.0-debian-12-r3"` |  |
+| image.tag | string | `"2.15.0-debian-12-r11"` |  |
 | initContainers | list | `[]` |  |
 | kubeResources.certificatesigningrequests | bool | `true` |  |
 | kubeResources.configmaps | bool | `true` |  |
@@ -97,7 +100,6 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 | kubeResources.statefulsets | bool | `true` |  |
 | kubeResources.storageclasses | bool | `true` |  |
 | kubeResources.validatingwebhookconfigurations | bool | `false` |  |
-| kubeResources.verticalpodautoscalers | bool | `false` |  |
 | kubeResources.volumeattachments | bool | `true` |  |
 | kubeVersion | string | `""` |  |
 | lifecycleHooks | object | `{}` |  |
@@ -140,6 +142,7 @@ kube-state-metrics is a simple service that listens to the Kubernetes API server
 | priorityClassName | string | `""` |  |
 | rbac.create | bool | `true` |  |
 | rbac.pspEnabled | bool | `true` |  |
+| rbac.rules | list | `[]` |  |
 | readinessProbe.enabled | bool | `true` |  |
 | readinessProbe.failureThreshold | int | `6` |  |
 | readinessProbe.initialDelaySeconds | int | `30` |  |
