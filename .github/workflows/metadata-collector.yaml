@@ -32,6 +32,6 @@ jobs:
 
       - name: Collect charts
         id: charts
-        run: echo "charts=$(echo "${CHANGED_CHART_DIRS//charts\//}" | tr -d '\n' | jq -R -s -c 'split(" ")')" >> "$GITHUB_OUTPUT"
+        run: echo "charts=${CHANGED_CHART_DIRS}" >> "$GITHUB_OUTPUT"
         env:
           CHANGED_CHART_DIRS: ${{ steps.changed-directories.outputs.all_changed_files }}
