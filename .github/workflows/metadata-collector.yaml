@@ -38,4 +38,4 @@ jobs:
         id: changed-charts
         run: echo "$CHANGED_CHART_DIRS"
         env:
-          CHANGED_CHART_DIRS: ${{ steps.changed-directories.outputs.directories }}
+          CHANGED_CHART_DIRS: ${{ steps.changed-directories.outputs.all_changed_files }}
