@@ -59,7 +59,7 @@ spec:
     - ports:
         - port: {{ .Values.minio.service.ports.api }}
         - port: {{ .Values.minio.service.ports.api }}
-      to: 
+      to:
         - podSelector:
             matchLabels:
               app.kubernetes.io/name: minio

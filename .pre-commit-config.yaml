@@ -8,6 +8,14 @@ repos:
       - id: check-merge-conflict
       - id: end-of-file-fixer
 
+  - repo: local
+    hooks:
+      - id: helm-dependency-build
+        name: run helm dependency build
+        entry: scripts/helm-dependency-build.sh
+        language: script
+        pass_filenames: false
+
   - repo: https://github.com/gruntwork-io/pre-commit
     # renovate: datasource=github-releases depName=gruntwork-io/pre-commit
     rev: 40f924cd642f5dc98d12bd97b07f3752223553da # v0.1.30 # pragma: allowlist secret

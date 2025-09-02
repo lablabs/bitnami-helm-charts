@@ -99,7 +99,11 @@ jobs:
 
   chart-testing:
     runs-on: ubuntu-24.04
-    needs: [pre-commit, artifacthub-lint]
+    needs: [pre-commit, artifacthub-lint, metadata-collector]
+    strategy:
+      fail-fast: false
+      matrix:
+        chart: ${{ fromJSON(needs.metadata-collector.outputs.charts) }}
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 # pragma: allowlist secret
@@ -123,16 +127,37 @@ jobs:
           yamllint_version: ${{ env.CHART_TESTING_YAMLLINT_VERSION }}
           yamale_version: ${{ env.CHART_TESTING_YAMALE_VERSION }}
 
+      - name: Build Helm dependencies
+        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
+        run: scripts/helm-dependency-build.sh $CHART_NAME
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Run chart-testing (lint)
-        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml
+        # zizmor:ignore-template-injection
+        run: ct lint --target-branch main --validate-maintainers=false --check-version-increment=false --lint-conf .yamllint.yaml --charts charts/${CHART_NAME}
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
+      - name: Determine chart type
+        id: chart-type
+        run: echo "type=$(yq -r '.type' charts/${CHART_NAME}/Chart.yaml)" >> $GITHUB_OUTPUT
+        env:
+          CHART_NAME: ${{ matrix.chart }}
 
       - name: Create kind cluster
+        if: ${{ steps.chart-type.outputs.type == 'application' }} # Only run installation tests for application charts, skip library charts
         uses: helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3 # v1.12.0 # pragma: allowlist secret
 
       # FIXME config: Place custom steps to install CRDs or other dependencies here
 
       - name: Run chart-testing (install)
-        run: ct install --target-branch main
+        if: ${{ steps.chart-type.outputs.type == 'application' }} # Only run installation tests for application charts, skip library charts
+        # zizmor:ignore-template-injection
+        run: ct install --target-branch main --charts charts/${CHART_NAME}
+        env:
+          CHART_NAME: ${{ matrix.chart }}
 
   release:
     runs-on: ubuntu-24.04
@@ -158,12 +183,18 @@ jobs:
       - name: GitHub Slug Action
         uses: rlespinasse/github-slug-action@955b5ba4560860f8a633bd24190941f16016e42c # v5.1.0
 
+      - name: Build Helm dependencies
+        # Build Helm chart dependencies locally to support both chart-testing lint and install operations.
+        # This allows using the --skip-helm-dependencies flag with chart-testing commands, eliminating the need for separate repository configurations during testing.
+        run: scripts/helm-dependency-build.sh $CHART_NAME
+        env:
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Publish Helm chart
         # FIXME config: Add dependency repositories
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          helm dependency build charts/${CHART_NAME}
           helm package charts/${CHART_NAME}
           helm push "$(realpath ${CHART_NAME}-*.tgz)" oci://ghcr.io/${REPOSITORY_NAME}
 

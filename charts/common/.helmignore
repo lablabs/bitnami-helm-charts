@@ -24,3 +24,7 @@
 img/
 # Changelog
 CHANGELOG.md
+# ct
+ct.yaml
+# helm
+helm-repositories.yaml
