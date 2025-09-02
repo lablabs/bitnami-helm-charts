@@ -1,4 +1,4 @@
-# kube-prometheus
+# prometheus
 
 ![Version: 9.5.13](https://img.shields.io/badge/Version-9.5.13-informational?style=flat-square) ![AppVersion: 0.76.1](https://img.shields.io/badge/AppVersion-0.76.1-informational?style=flat-square)
 
@@ -11,10 +11,6 @@ Prometheus Operator provides easy monitoring definitions for Kubernetes services
 | Name | Email | Url |
 | ---- | ------ | --- |
 | Broadcom, Inc. All Rights Reserved. |  | <https://github.com/bitnami/charts> |
-
-## Source Code
-
-* <https://github.com/bitnami/charts/tree/main/bitnami/kube-prometheus>
 
 ## Requirements
 
