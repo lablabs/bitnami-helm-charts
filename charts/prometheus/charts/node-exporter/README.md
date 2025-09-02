@@ -1,6 +1,6 @@
 # node-exporter
 
-![Version: 4.4.14](https://img.shields.io/badge/Version-4.4.14-informational?style=flat-square) ![AppVersion: 1.8.2](https://img.shields.io/badge/AppVersion-1.8.2-informational?style=flat-square)
+![Version: 4.5.11](https://img.shields.io/badge/Version-4.5.11-informational?style=flat-square) ![AppVersion: 1.9.1](https://img.shields.io/badge/AppVersion-1.9.1-informational?style=flat-square)
 
 Prometheus exporter for hardware and OS metrics exposed by UNIX kernels, with pluggable metric collectors.
 
@@ -20,7 +20,7 @@ Prometheus exporter for hardware and OS metrics exposed by UNIX kernels, with pl
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/lablabs/bitnami-helm-charts | common | 2.31.4 |
+| oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 
 ## Values
 
@@ -62,6 +62,7 @@ Prometheus exporter for hardware and OS metrics exposed by UNIX kernels, with pl
 | global.defaultStorageClass | string | `""` |  |
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
+| global.security.allowInsecureImages | bool | `false` |  |
 | global.storageClass | string | `""` |  |
 | hostAliases | list | `[]` |  |
 | hostNetwork | bool | `true` |  |
@@ -71,7 +72,7 @@ Prometheus exporter for hardware and OS metrics exposed by UNIX kernels, with pl
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"bitnami/node-exporter"` |  |
-| image.tag | string | `"1.8.2-debian-12-r5"` |  |
+| image.tag | string | `"1.9.1-debian-12-r4"` |  |
 | initContainers | list | `[]` |  |
 | isolatedDeployment | bool | `true` |  |
 | kubeVersion | string | `""` |  |

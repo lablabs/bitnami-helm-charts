@@ -21,7 +21,16 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Get changed files
+        uses: step-security/changed-files@95b56dadb92a30ca9036f16423fd3c088a71ee94 # v46.0.5
+        id: changed-directories
+        with:
+          dir_names: "true"
+          dir_names_max_depth: "2"
+          files: charts/**
+
       - name: Collect charts
         id: charts
-        run: |
-          cd charts && echo "charts=$(ls -d * | jq -R -s -c 'split("\n")[:-1]')" >> "$GITHUB_OUTPUT"
+        run: echo "charts=$(echo "${CHANGED_CHART_DIRS//charts\//}" | tr -d '\n' | jq -R -s -c 'split(" ")')" >> "$GITHUB_OUTPUT"
+        env:
+          CHANGED_CHART_DIRS: ${{ steps.changed-directories.outputs.all_changed_files }}
