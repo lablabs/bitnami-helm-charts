@@ -128,7 +128,7 @@ jobs:
           CHART_VERSION=$(yq -r '.version' charts/${CHART_NAME}/Chart.yaml)
           echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
 
-          if oras manifest fetch oci://ghcr.io/${REPOSITORY_NAME}/${CHART_NAME}:${CHART_VERSION} >/dev/null 2>&1; then
+          if oras manifest fetch oci://ghcr.io/${REPOSITORY_NAME}/${CHART_NAME}:${CHART_VERSION}; then
             echo "Error: Chart '${CHART_NAME}' version '${CHART_VERSION}' already exists in the registry. Increment the version in Chart.yaml and push again."
             oras logout ghcr.io
             exit 1
