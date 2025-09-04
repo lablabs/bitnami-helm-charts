@@ -2,7 +2,7 @@
 
 process_chart() {
   dir="$1"
-  if yq -e '.dependencies[] | select(.repository | match("https://"))' "$dir/Chart.yaml"; then
+  if yq -e '.dependencies[] | select(.repository | match("https://"))' "$dir/Chart.yaml" >/dev/null 2>&1; then
      yq -r '.repositories[] | "helm repo add \(.name) \(.url)"' $dir/helm-repositories.yaml | sh
     helm dependency build "$dir" --repository-config "$dir/helm-repositories.yaml"
   else

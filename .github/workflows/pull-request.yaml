@@ -120,6 +120,23 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Check if chart version already exists
+        run: |
+          CHART_VERSION=$(yq -r '.version' charts/${CHART_NAME}/Chart.yaml)
+          echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io --username ${GITHUB_ACTOR} --password-stdin
+
+          if oras manifest fetch oci://ghcr.io/${REPOSITORY_NAME}/${CHART_NAME}:${CHART_VERSION} >/dev/null 2>&1; then
+            echo "Error: Chart '${CHART_NAME}' version '${CHART_VERSION}' already exists in the registry. Increment the version in Chart.yaml and push again."
+            oras logout ghcr.io
+            exit 1
+          else
+            oras logout ghcr.io
+          fi
+
+        env:
+          REPOSITORY_NAME: ${{ github.repository }}
+          CHART_NAME: ${{ matrix.chart }}
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@0d28d3144d3a25ea2cc349d6e59901c4ff469b3b # v2.7.0 # pragma: allowlist secret
         with:
