@@ -14,24 +14,18 @@ jobs:
   chart-list:
     runs-on: ubuntu-24.04
     outputs:
-      charts: ${{ steps.charts.outputs.charts }}
+      charts: ${{ steps.changed-chart-dirs.outputs.all_changed_files }}
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 # pragma: allowlist secret
         with:
           persist-credentials: false
 
-      - name: Get changed chart dirs
+      - name: Get changed charts
         uses: step-security/changed-files@95b56dadb92a30ca9036f16423fd3c088a71ee94 # v46.0.5
-        id: changed-chart-dirs
+        id: changed-charts
         with:
           dir_names: "true"
           dir_names_max_depth: "1"
           path: charts
           matrix: "true"
-
-      - name: Output changed charts
-        id: charts
-        run: echo "charts=${CHANGED_CHART_DIRS}" >> "$GITHUB_OUTPUT"
-        env:
-          CHANGED_CHART_DIRS: ${{ steps.changed-chart-dirs.outputs.all_changed_files }}
