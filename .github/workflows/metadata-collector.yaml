@@ -5,7 +5,7 @@ on:
     outputs:
       charts:
         description: "List of changed charts within the repository"
-        value: ${{ steps.changed-charts.outputs.all_changed_files }}
+        value: ${{ jobs.chart-list.outputs.charts }}
 
 permissions:
   contents: read
@@ -29,9 +29,3 @@ jobs:
           dir_names_max_depth: 1
           path: charts
           matrix: true
-
-      - name: Output changed charts
-        id: charts
-        run: echo "${CHART_NAME}"
-        env:
-          CHART_NAME: ${{ steps.changed-charts.outputs.all_changed_files }}
