@@ -19,6 +19,6 @@ description: Memcached is an high-performance, distributed memory object caching
 keywords:
 - memcached
 name: memcached
-version: 7.9.8
+version: 7.9.7
 icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/memcached/img/memcached-stack-220x234.png
 type: application
