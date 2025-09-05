@@ -1,0 +1,24 @@
+annotations:
+  images: |
+    - name: memcached
+      image: docker.io/bitnami/memcached:1.6.39-debian-12-r0
+    - name: memcached-exporter
+      image: docker.io/bitnami/memcached-exporter:0.15.3-debian-12-r5
+    - name: busybox
+      image: docker.io/thanos/busybox:1.37.0
+  licenses: Apache-2.0
+apiVersion: v2
+appVersion: 1.6.39
+dependencies:
+- name: common
+  repository: oci://ghcr.io/lablabs/bitnami-helm-charts
+  version: 2.31.4
+description: Memcached is an high-performance, distributed memory object caching system,
+  generic in nature, but intended for use in speeding up dynamic web applications
+  by alleviating database load.
+keywords:
+- memcached
+name: memcached
+version: 7.9.7
+icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/memcached/img/memcached-stack-220x234.png
+type: application

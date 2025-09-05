@@ -1,0 +1,26 @@
+annotations:
+  images: |
+    - name: thanos
+      image: quay.io/thanos/thanos:v0.39.2
+    - name: busybox
+      image: docker.io/thanos/busybox:1.37.0
+  licenses: Apache-2.0
+  tanzuCategory: application
+apiVersion: v2
+appVersion: 0.39.2
+dependencies:
+- name: common
+  repository: oci://ghcr.io/lablabs/bitnami-helm-charts
+  version: 2.31.4
+description: Thanos is a highly available metrics system that can be added on top
+  of existing Prometheus deployments, providing a global query view across all Prometheus
+  installations.
+keywords:
+- analytics
+- monitoring
+- prometheus
+- thanos
+name: thanos
+version: 17.3.1
+icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/thanos/img/thanos-stack-220x234.png
+type: application

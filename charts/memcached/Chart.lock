@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: oci://ghcr.io/lablabs/bitnami-helm-charts
+  version: 2.31.4
+digest: sha256:94109c7af6bd9fcb90521101c3866dbaecb424991fd17542e369760c9f609932
+generated: "2025-09-01T11:47:30.189531+02:00"
