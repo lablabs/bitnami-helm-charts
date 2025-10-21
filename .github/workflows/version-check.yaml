@@ -21,10 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          persist-credentials: false
+          persist-credentials: true # needed for private repositories
 
       - name: Set up ORAS
-        uses: oras-project/setup-oras@8d34698a59f5ffe24821f0b48ab62a3de8b64b20 # v1.2.3
+        uses: oras-project/setup-oras@22ce207df3b08e061f537244349aac6ae1d214f6 # v1.2.4
 
       - name: Check if chart version exists
         run: |
@@ -41,4 +41,22 @@ jobs:
 
         env:
           REPOSITORY_NAME: ${{ github.repository }}
+          CHART_NAME: ${{ matrix.chart }}
+
+      - name: Ensure pushed tag matches the chart name and version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          CHART_VERSION=$(yq -r '.version' charts/${CHART_NAME}/Chart.yaml)
+          TAG_REF="${GITHUB_REF#refs/tags/}"
+          EXPECTED_TAG="${CHART_NAME}-${CHART_VERSION}"
+
+          if [ "$TAG_REF" != "$EXPECTED_TAG" ]; then
+            echo "Error: Pushed tag ($TAG_REF) does not match expected format."
+            echo "Expected: $EXPECTED_TAG Received: $TAG_REF"
+            exit 1
+          else
+            echo "Pushed tag ($TAG_REF) matches expected format: $EXPECTED_TAG"
+          fi
+
+        env:
           CHART_NAME: ${{ matrix.chart }}
