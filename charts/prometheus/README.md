@@ -1,6 +1,6 @@
 # prometheus
 
-![Version: 20.2.16](https://img.shields.io/badge/Version-20.2.16-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
+![Version: 20.2.18](https://img.shields.io/badge/Version-20.2.18-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
 
 Prometheus Operator provides easy monitoring definitions for Kubernetes services and deployment and management of Prometheus instances.
 
