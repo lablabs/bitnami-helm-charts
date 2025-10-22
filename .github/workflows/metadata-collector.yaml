@@ -24,8 +24,17 @@ jobs:
       - name: Get changed charts
         uses: step-security/changed-files@95b56dadb92a30ca9036f16423fd3c088a71ee94 # v46.0.5
         id: changed-charts
+        if: github.ref_type != 'tag'
         with:
           dir_names: true
           dir_names_max_depth: 1
           path: charts
           matrix: true
+
+      - name: Get changed chart if tag
+        if: github.ref_type == 'tag'
+        id: changed-charts
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          chart_name="${tag%%-*}"
+          echo "all_changed_files=[\"charts/${chart_name}\"]" >> $GITHUB_OUTPUT
