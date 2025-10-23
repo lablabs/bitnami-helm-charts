@@ -38,12 +38,11 @@ jobs:
           else
             oras logout ghcr.io
           fi
-
         env:
           REPOSITORY_NAME: ${{ github.repository }}
           CHART_NAME: ${{ matrix.chart }}
 
-      - name: Ensure pushed tag matches the chart name and version
+      - name: Check if tag matches the chart name and version
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           CHART_VERSION=$(yq -r '.version' charts/${CHART_NAME}/Chart.yaml)
@@ -57,6 +56,5 @@ jobs:
           else
             echo "Pushed tag ($TAG_REF) matches expected format: $EXPECTED_TAG"
           fi
-
         env:
           CHART_NAME: ${{ matrix.chart }}

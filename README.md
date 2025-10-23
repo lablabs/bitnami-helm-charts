@@ -9,7 +9,7 @@
 
 # Helm chart template
 
-This is a template reposity that should be use to create in-house Helm charts.
+This is a template repository that should be use to create in-house Helm charts.
 
 ## Usage
 
@@ -24,7 +24,7 @@ This is a template reposity that should be use to create in-house Helm charts.
 
     1. Modify [`Chart.yaml`](charts/example/Chart.yaml) accordingly!
 
-1. Place custom values for the chart tests in [`values.yaml`](`charts/example/ci/values.yaml`).
+1. Place custom values for the chart tests in [`test-values.yaml`](`charts/example/ci/test-values.yaml`).
 
 > [!IMPORTANT]
 > If your chart contains custom resources, make sure CRDs or any other dependencies are installed in Kind cluster created in the [`pull-request`](.github/workflows/pull-request.yaml) workflow and `chart-testing` job.
@@ -32,12 +32,40 @@ This is a template reposity that should be use to create in-house Helm charts.
 1. If you want to use [helm-docs](https://github.com/norwoodj/helm-docs) to generate your Helm chart documentation, modify the contents of [`README.md.gotmpl`](charts/example/README.md.gotmpl) file. helm-docs will use the file to generate [`README.md`](charts/example/README.md).
 Otherwise, remove helm-docs from pre-commit and you can modify the chart README.md by hand.
 
-### Releasing a chart
+### Chart Versioning and Releases
+
+#### Development and Testing (Pull Requests)
+
+When developing charts in a pull request:
 
 1. Install pre-commit by running `pre-commit install`.
-1. Commit and create a PR. Make sure the chart version is updated appropriately in [`Chart.yaml`](charts/example/Chart.yaml).
+1. Update the chart version in [`Chart.yaml`](charts/example/Chart.yaml) appropriately.
+1. Commit and create a PR.
+1. **Every push to the PR branch will automatically trigger a build** that publishes the chart to a branch-specific registry location (`ghcr.io/{repository}/{branch-name}/{chart-name}:{chart-version}`).
 1. Wait for actions to succeed and approval.
 1. Merge PR.
+
+#### Production Releases (Main Branch)
+
+**Important**: Merging into the main branch does **NOT** automatically trigger a production release. To create a production release:
+
+1. **After merging your PR to main**, you must manually push a tag to trigger the release.
+1. The tag must follow the format: `{chart-name}-{version}`
+   - Example: `chart-name-1.1.1`
+   - The version **must exactly match** the version specified in the chart's `Chart.yaml` file
+2. Push the tag to trigger the release:
+   ```bash
+   git tag my-chart-1.1.1
+   git push --tags
+   ```
+3. This will trigger the release workflow which publishes the chart to the main registry (`ghcr.io/{repository}/{chart-name}:{chart-version}`).
+
+#### Version Management Best Practices
+
+- **Always increment the chart version** in `Chart.yaml` when making changes
+- **Use semantic versioning** (e.g., 1.0.0, 1.0.1, 1.1.0, 2.0.0)
+- **Ensure the tag version matches** the Chart.yaml version exactly
+- The version check workflow will prevent duplicate versions from being published
 
 ### Integrate with ArtifactHUB
 
