@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 process_chart() {
   dir="$1"
