@@ -34,11 +34,6 @@ spec:
   {{- end }}
   {{- if .Values.compactor.affinity }}
   affinity: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.affinity "context" $) | nindent 4 }}
-  {{- else }}
-  affinity:
-    podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.compactor.podAffinityPreset "component" "compactor" "customLabels" $podLabels "context" $) | nindent 6 }}
-    podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.compactor.podAntiAffinityPreset "component" "compactor" "customLabels" $podLabels "context" $) | nindent 6 }}
-    nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.compactor.nodeAffinityPreset.type "key" .Values.compactor.nodeAffinityPreset.key "values" .Values.compactor.nodeAffinityPreset.values) | nindent 6 }}
   {{- end }}
   {{- if .Values.compactor.dnsConfig }}
   dnsConfig: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.dnsConfig "context" $) | nindent 4 }}

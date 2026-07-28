@@ -37,12 +37,6 @@ spec:
       {{- end }}
       {{- if .Values.blackboxExporter.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.blackboxExporter.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.blackboxExporter.podLabels .Values.commonLabels ) "context" . ) }}
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.blackboxExporter.podAffinityPreset "component" "blackbox-exporter" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.blackboxExporter.podAntiAffinityPreset "component" "blackbox-exporter" "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.blackboxExporter.nodeAffinityPreset.type "key" .Values.blackboxExporter.nodeAffinityPreset.key "values" .Values.blackboxExporter.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
       {{- if .Values.blackboxExporter.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.blackboxExporter.nodeSelector "context" $) | nindent 8 }}

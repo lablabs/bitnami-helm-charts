@@ -54,11 +54,6 @@ spec:
       {{- end }}
       {{- if .Values.receiveDistributor.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.receiveDistributor.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.receiveDistributor.podAffinityPreset "component" "receive-distributor" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.receiveDistributor.podAntiAffinityPreset "component" "receive-distributor" "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.receiveDistributor.nodeAffinityPreset.type "key" .Values.receiveDistributor.nodeAffinityPreset.key "values" .Values.receiveDistributor.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
       {{- if .Values.receiveDistributor.dnsConfig }}
       dnsConfig: {{- include "common.tplvalues.render" (dict "value" .Values.receiveDistributor.dnsConfig "context" $) | nindent 8 }}

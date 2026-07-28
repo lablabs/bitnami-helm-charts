@@ -1,6 +1,6 @@
 # memcached
 
-![Version: 7.9.7](https://img.shields.io/badge/Version-7.9.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.39](https://img.shields.io/badge/AppVersion-1.6.39-informational?style=flat-square)
+![Version: 8.0.0](https://img.shields.io/badge/Version-8.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.39](https://img.shields.io/badge/AppVersion-1.6.39-informational?style=flat-square)
 
 Memcached is an high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
 
@@ -150,9 +150,6 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
 | networkPolicy.ingressPodMatchLabels | object | `{}` |  |
-| nodeAffinityPreset.key | string | `""` |  |
-| nodeAffinityPreset.type | string | `""` |  |
-| nodeAffinityPreset.values | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `true` |  |
 | pdb.maxUnavailable | string | `""` |  |
@@ -164,9 +161,7 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | persistence.selector | object | `{}` |  |
 | persistence.size | string | `"8Gi"` |  |
 | persistence.storageClass | string | `""` |  |
-| podAffinityPreset | string | `""` |  |
 | podAnnotations | object | `{}` |  |
-| podAntiAffinityPreset | string | `"soft"` |  |
 | podLabels | object | `{}` |  |
 | podManagementPolicy | string | `"Parallel"` |  |
 | podSecurityContext.enabled | bool | `true` |  |

@@ -51,11 +51,6 @@ spec:
       {{- end }}
       {{- if .Values.query.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.query.affinity "context" $) | nindent 8 }}
-      {{- else }}
-      affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.query.podAffinityPreset "component" "query" "customLabels" $podLabels "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.query.podAntiAffinityPreset "component" "query" "topologyKey" .Values.query.podAntiAffinityPresetTopologyKey "customLabels" $podLabels "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.query.nodeAffinityPreset.type "key" .Values.query.nodeAffinityPreset.key "values" .Values.query.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
       {{- if .Values.query.dnsConfig }}
       dnsConfig: {{- include "common.tplvalues.render" (dict "value" .Values.query.dnsConfig "context" $) | nindent 8 }}

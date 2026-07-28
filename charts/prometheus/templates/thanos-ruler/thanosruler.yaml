@@ -111,17 +111,6 @@ spec:
     {{- end }}
 {{- if .Values.thanosRuler.affinity }}
   affinity: {{ include "common.tplvalues.render" (dict "value" .Values.thanosRuler.affinity "context" $) | nindent 4 }}
-{{- else }}
-  affinity:
-    {{- if not (empty .Values.thanosRuler.podAffinityPreset) }}
-    podAffinity: {{ include "common.affinities.pods" (dict "type" .Values.thanosRuler.podAffinityPreset "component" "thanos-ruler" "context" $) | nindent 6 }}
-    {{- end }}
-    {{- if not (empty .Values.prometheus.podAntiAffinityPreset) }}
-    podAntiAffinity: {{ include "common.affinities.pods" (dict "type" .Values.thanosRuler.podAntiAffinityPreset "component" "thanos-ruler" "context" $) | nindent 6 }}
-    {{- end }}
-    {{- if not (empty .Values.prometheus.nodeAffinityPreset.values) }}
-    nodeAffinity: {{ include "common.affinities.nodes" (dict "type" .Values.thanosRuler.nodeAffinityPreset.type "key" .Values.prometheus.nodeAffinityPreset.key "values" .Values.thanosRuler.nodeAffinityPreset.values) | nindent 6 }}
-    {{- end }}
 {{- end }}
 {{- if .Values.prometheus.tolerations }}
   tolerations: {{ include "common.tplvalues.render" (dict "value" .Values.thanosRuler.tolerations "context" $) | nindent 4 }}

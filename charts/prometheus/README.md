@@ -1,6 +1,6 @@
 # prometheus
 
-![Version: 11.2.16](https://img.shields.io/badge/Version-11.2.16-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
+![Version: 12.0.0](https://img.shields.io/badge/Version-12.0.0-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
 
 Prometheus Operator provides easy monitoring definitions for Kubernetes services and deployment and management of Prometheus instances.
 
@@ -95,9 +95,6 @@ Kubernetes: `>= 1.16.0-0`
 | alertmanager.networkPolicy.extraIngress | list | `[]` |  |
 | alertmanager.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | alertmanager.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
-| alertmanager.nodeAffinityPreset.key | string | `""` |  |
-| alertmanager.nodeAffinityPreset.type | string | `""` |  |
-| alertmanager.nodeAffinityPreset.values | list | `[]` |  |
 | alertmanager.nodeSelector | object | `{}` |  |
 | alertmanager.paused | bool | `false` |  |
 | alertmanager.pdb.create | bool | `true` |  |
@@ -108,8 +105,6 @@ Kubernetes: `>= 1.16.0-0`
 | alertmanager.persistence.enabled | bool | `false` |  |
 | alertmanager.persistence.size | string | `"8Gi"` |  |
 | alertmanager.persistence.storageClass | string | `""` |  |
-| alertmanager.podAffinityPreset | string | `""` |  |
-| alertmanager.podAntiAffinityPreset | string | `"soft"` |  |
 | alertmanager.podMetadata.annotations | object | `{}` |  |
 | alertmanager.podMetadata.labels | object | `{}` |  |
 | alertmanager.podSecurityContext.enabled | bool | `true` |  |
@@ -214,16 +209,11 @@ Kubernetes: `>= 1.16.0-0`
 | blackboxExporter.networkPolicy.extraIngress | list | `[]` |  |
 | blackboxExporter.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | blackboxExporter.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
-| blackboxExporter.nodeAffinityPreset.key | string | `""` |  |
-| blackboxExporter.nodeAffinityPreset.type | string | `""` |  |
-| blackboxExporter.nodeAffinityPreset.values | list | `[]` |  |
 | blackboxExporter.nodeSelector | object | `{}` |  |
 | blackboxExporter.pdb.create | bool | `true` |  |
 | blackboxExporter.pdb.maxUnavailable | string | `""` |  |
 | blackboxExporter.pdb.minAvailable | string | `""` |  |
-| blackboxExporter.podAffinityPreset | string | `""` |  |
 | blackboxExporter.podAnnotations | object | `{}` |  |
-| blackboxExporter.podAntiAffinityPreset | string | `"soft"` |  |
 | blackboxExporter.podLabels | object | `{}` |  |
 | blackboxExporter.podSecurityContext.enabled | bool | `true` |  |
 | blackboxExporter.podSecurityContext.fsGroup | int | `1001` |  |
@@ -433,16 +423,11 @@ Kubernetes: `>= 1.16.0-0`
 | operator.networkPolicy.extraIngress | list | `[]` |  |
 | operator.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | operator.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
-| operator.nodeAffinityPreset.key | string | `""` |  |
-| operator.nodeAffinityPreset.type | string | `""` |  |
-| operator.nodeAffinityPreset.values | list | `[]` |  |
 | operator.nodeSelector | object | `{}` |  |
 | operator.pdb.create | bool | `true` |  |
 | operator.pdb.maxUnavailable | string | `""` |  |
 | operator.pdb.minAvailable | string | `""` |  |
-| operator.podAffinityPreset | string | `""` |  |
 | operator.podAnnotations | object | `{}` |  |
-| operator.podAntiAffinityPreset | string | `"soft"` |  |
 | operator.podLabels | object | `{}` |  |
 | operator.podSecurityContext.enabled | bool | `true` |  |
 | operator.podSecurityContext.fsGroup | int | `1001` |  |
@@ -651,9 +636,6 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.networkPolicy.extraIngress | list | `[]` |  |
 | prometheus.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | prometheus.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
-| prometheus.nodeAffinityPreset.key | string | `""` |  |
-| prometheus.nodeAffinityPreset.type | string | `""` |  |
-| prometheus.nodeAffinityPreset.values | list | `[]` |  |
 | prometheus.nodeSelector | object | `{}` |  |
 | prometheus.paused | bool | `false` |  |
 | prometheus.pdb.create | bool | `true` |  |
@@ -664,8 +646,6 @@ Kubernetes: `>= 1.16.0-0`
 | prometheus.persistence.enabled | bool | `false` |  |
 | prometheus.persistence.size | string | `"8Gi"` |  |
 | prometheus.persistence.storageClass | string | `""` |  |
-| prometheus.podAffinityPreset | string | `""` |  |
-| prometheus.podAntiAffinityPreset | string | `"soft"` |  |
 | prometheus.podMetadata.annotations | object | `{}` |  |
 | prometheus.podMetadata.labels | object | `{}` |  |
 | prometheus.podMonitorNamespaceSelector | object | `{}` |  |
@@ -877,9 +857,6 @@ Kubernetes: `>= 1.16.0-0`
 | thanosRuler.networkPolicy.extraIngress | list | `[]` |  |
 | thanosRuler.networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | thanosRuler.networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
-| thanosRuler.nodeAffinityPreset.key | string | `""` |  |
-| thanosRuler.nodeAffinityPreset.type | string | `""` |  |
-| thanosRuler.nodeAffinityPreset.values | list | `[]` |  |
 | thanosRuler.nodeSelector | object | `{}` |  |
 | thanosRuler.objectStorageConfig.config | object | `{}` |  |
 | thanosRuler.objectStorageConfig.existingSecret.key | string | `""` |  |
@@ -888,8 +865,6 @@ Kubernetes: `>= 1.16.0-0`
 | thanosRuler.pdb.create | bool | `true` |  |
 | thanosRuler.pdb.maxUnavailable | string | `""` |  |
 | thanosRuler.pdb.minAvailable | string | `""` |  |
-| thanosRuler.podAffinityPreset | string | `""` |  |
-| thanosRuler.podAntiAffinityPreset | string | `"soft"` |  |
 | thanosRuler.podMetadata.annotations | object | `{}` |  |
 | thanosRuler.podMetadata.labels | object | `{}` |  |
 | thanosRuler.podSecurityContext.enabled | bool | `true` |  |

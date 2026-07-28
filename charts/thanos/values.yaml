@@ -354,40 +354,8 @@ query:
   ## @param query.extraVolumeMounts Extra volume mounts to add to the query container
   ##
   extraVolumeMounts: []
-  ## @param query.podAffinityPreset Thanos Query pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param query.podAntiAffinityPreset Thanos Query pod anti-affinity preset. Ignored if `query.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## @param query.podAntiAffinityPresetTopologyKey Thanos Query pod anti-affinity topologyKey. Ignored if `query.affinity` is set.
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPresetTopologyKey: ""
-  ## Thanos Query node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param query.nodeAffinityPreset.type Thanos Query node affinity preset type. Ignored if `query.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param query.nodeAffinityPreset.key Thanos Query node label key to match Ignored if `query.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param query.nodeAffinityPreset.values Thanos Query node label values to match. Ignored if `query.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param query.affinity Thanos Query affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: query.podAffinityPreset, query.podAntiAffinityPreset, and query.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param query.nodeSelector Thanos Query node labels for pod assignment
@@ -1148,36 +1116,8 @@ queryFrontend:
   ## @param queryFrontend.extraVolumeMounts Extra volume mounts to add to the query-frontend container
   ##
   extraVolumeMounts: []
-  ## @param queryFrontend.podAffinityPreset Thanos Query Frontend pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param queryFrontend.podAntiAffinityPreset Thanos Query Frontend pod anti-affinity preset. Ignored if `queryFrontend.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Query Frontend node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param queryFrontend.nodeAffinityPreset.type Thanos Query Frontend node affinity preset type. Ignored if `queryFrontend.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param queryFrontend.nodeAffinityPreset.key Thanos Query Frontend node label key to match. Ignored if `queryFrontend.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param queryFrontend.nodeAffinityPreset.values Thanos Query Frontend node label values to match. Ignored if `queryFrontend.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param queryFrontend.affinity Thanos Query Frontend affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: queryFrontend.podAffinityPreset, queryFrontend.podAntiAffinityPreset, and queryFrontend.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param queryFrontend.nodeSelector Thanos Query Frontend node labels for pod assignment
@@ -1697,36 +1637,8 @@ bucketweb:
   ## @param bucketweb.extraVolumeMounts Extra volume mounts to add to the bucketweb container
   ##
   extraVolumeMounts: []
-  ## @param bucketweb.podAffinityPreset Thanos Bucket Web pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param bucketweb.podAntiAffinityPreset Thanos Bucket Web pod anti-affinity preset. Ignored if `bucketweb.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Bucket Web node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param bucketweb.nodeAffinityPreset.type Thanos Bucket Web node affinity preset type. Ignored if `bucketweb.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param bucketweb.nodeAffinityPreset.key Thanos Bucket Web node label key to match. Ignored if `bucketweb.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param bucketweb.nodeAffinityPreset.values Thanos Bucket Web node label values to match. Ignored if `bucketweb.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param bucketweb.affinity Thanos Bucket Web affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: bucketweb.podAffinityPreset, bucketweb.podAntiAffinityPreset, and bucketweb.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param bucketweb.nodeSelector Thanos Bucket Web node labels for pod assignment
@@ -2253,36 +2165,8 @@ compactor:
   ## @param compactor.extraVolumeMounts Extra volume mounts to add to the compactor container
   ##
   extraVolumeMounts: []
-  ## @param compactor.podAffinityPreset Thanos Compactor pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param compactor.podAntiAffinityPreset Thanos Compactor pod anti-affinity preset. Ignored if `compactor.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Compactor node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param compactor.nodeAffinityPreset.type Thanos Compactor node affinity preset type. Ignored if `compactor.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param compactor.nodeAffinityPreset.key Thanos Compactor node label key to match. Ignored if `compactor.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param compactor.nodeAffinityPreset.values Thanos Compactor node label values to match. Ignored if `compactor.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param compactor.affinity Thanos Compactor affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: compactor.podAffinityPreset, compactor.podAntiAffinityPreset, and compactor.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param compactor.nodeSelector Thanos Compactor node labels for pod assignment
@@ -2827,36 +2711,8 @@ storegateway:
   ## @param storegateway.extraVolumeMounts Extra volume mounts to add to the storegateway container
   ##
   extraVolumeMounts: []
-  ## @param storegateway.podAffinityPreset Thanos Store Gateway pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param storegateway.podAntiAffinityPreset Thanos Store Gateway pod anti-affinity preset. Ignored if `storegateway.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Store Gateway node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param storegateway.nodeAffinityPreset.type Thanos Store Gateway node affinity preset type. Ignored if `storegateway.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param storegateway.nodeAffinityPreset.key Thanos Store Gateway node label key to match. Ignored if `storegateway.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param storegateway.nodeAffinityPreset.values Thanos Store Gateway node label values to match. Ignored if `storegateway.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param storegateway.affinity Thanos Store Gateway affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: storegateway.podAffinityPreset, storegateway.podAntiAffinityPreset, and storegateway.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param storegateway.nodeSelector Thanos Store Gateway node labels for pod assignment
@@ -3609,36 +3465,8 @@ ruler:
   ## @param ruler.extraVolumeMounts Extra volume mounts to add to the ruler container
   ##
   extraVolumeMounts: []
-  ## @param ruler.podAffinityPreset Thanos Ruler pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAffinityPreset: ""
-  ## @param ruler.podAntiAffinityPreset Thanos Ruler pod anti-affinity preset. Ignored if `ruler.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Ruler node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param ruler.nodeAffinityPreset.type Thanos Ruler node affinity preset type. Ignored if `ruler.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param ruler.nodeAffinityPreset.key Thanos Ruler node label key to match. Ignored if `ruler.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param ruler.nodeAffinityPreset.values Thanos Ruler node label values to match. Ignored if `ruler.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param ruler.affinity Thanos Ruler affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: ruler.podAffinityPreset, ruler.podAntiAffinityPreset, and ruler.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param ruler.nodeSelector Thanos Ruler node labels for pod assignment
@@ -4255,37 +4083,8 @@ receive:
   ## @param receive.extraVolumeMounts Extra volume mounts to add to the receive container
   ##
   extraVolumeMounts: []
-  ## @param receive.podAffinityPreset Thanos Receive pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ## Allowed values: soft, hard
-  ##
-  podAffinityPreset: ""
-  ## @param receive.podAntiAffinityPreset Thanos Receive pod anti-affinity preset. Ignored if `ruler.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Receive node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param receive.nodeAffinityPreset.type Thanos Receive node affinity preset type. Ignored if `receive.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param receive.nodeAffinityPreset.key Thanos Receive node label key to match. Ignored if `receive.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param receive.nodeAffinityPreset.values Thanos Receive node label values to match. Ignored if `receive.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param receive.affinity Thanos Receive affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: receive.podAffinityPreset, receive.podAntiAffinityPreset, and receive.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param receive.nodeSelector Thanos Receive node labels for pod assignment
@@ -4857,37 +4656,8 @@ receiveDistributor:
   ## @param receiveDistributor.extraVolumeMounts Extra volume mounts to add to the receive distributor container
   ##
   extraVolumeMounts: []
-  ## @param receiveDistributor.podAffinityPreset Thanos Receive pod affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ## Allowed values: soft, hard
-  ##
-  podAffinityPreset: ""
-  ## @param receiveDistributor.podAntiAffinityPreset Thanos Receive pod anti-affinity preset. Ignored if `receiveDistributor.affinity` is set. Allowed values: `soft` or `hard`
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-  ##
-  podAntiAffinityPreset: soft
-  ## Thanos Receive node affinity preset
-  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-  ##
-  nodeAffinityPreset:
-    ## @param receiveDistributor.nodeAffinityPreset.type Thanos Receive node affinity preset type. Ignored if `receiveDistributor.affinity` is set. Allowed values: `soft` or `hard`
-    ##
-    type: ""
-    ## @param receiveDistributor.nodeAffinityPreset.key Thanos Receive node label key to match. Ignored if `receiveDistributor.affinity` is set.
-    ## e.g:
-    ## key: "kubernetes.io/e2e-az-name"
-    ##
-    key: ""
-    ## @param receiveDistributor.nodeAffinityPreset.values Thanos Receive node label values to match. Ignored if `receiveDistributor.affinity` is set.
-    ## e.g:
-    ## values:
-    ##   - e2e-az1
-    ##   - e2e-az2
-    ##
-    values: []
   ## @param receiveDistributor.affinity Thanos Receive Distributor affinity for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: receiveDistributor.podAffinityPreset, receiveDistributor.podAntiAffinityPreset, and receiveDistributor.nodeAffinityPreset will be ignored when it's set
   ##
   affinity: {}
   ## @param receiveDistributor.nodeSelector Thanos Receive Distributor node labels for pod assignment
