@@ -50,6 +50,7 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | diagnosticMode.command[0] | string | `"sleep"` |  |
 | diagnosticMode.enabled | bool | `false` |  |
 | emptyDir.medium | string | `""` |  |
+| enableAffinityPresets | bool | `false` |  |
 | enableServiceLinks | bool | `true` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |
@@ -150,6 +151,9 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | networkPolicy.ingressNSMatchLabels | object | `{}` |  |
 | networkPolicy.ingressNSPodMatchLabels | object | `{}` |  |
 | networkPolicy.ingressPodMatchLabels | object | `{}` |  |
+| nodeAffinityPreset.key | string | `""` |  |
+| nodeAffinityPreset.type | string | `""` |  |
+| nodeAffinityPreset.values | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | pdb.create | bool | `true` |  |
 | pdb.maxUnavailable | string | `""` |  |
@@ -161,7 +165,9 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | persistence.selector | object | `{}` |  |
 | persistence.size | string | `"8Gi"` |  |
 | persistence.storageClass | string | `""` |  |
+| podAffinityPreset | string | `""` |  |
 | podAnnotations | object | `{}` |  |
+| podAntiAffinityPreset | string | `"soft"` |  |
 | podLabels | object | `{}` |  |
 | podManagementPolicy | string | `"Parallel"` |  |
 | podSecurityContext.enabled | bool | `true` |  |
