@@ -65,7 +65,7 @@ spec:
       {{- end }}
       {{- if .Values.storegateway.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.storegateway.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.storegateway.podAffinityPreset "component" "storegateway" "customLabels" $podLabels "context" $) | nindent 10 }}
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.storegateway.podAntiAffinityPreset "component" "storegateway" "customLabels" $podLabels "context" $) | nindent 10 }}

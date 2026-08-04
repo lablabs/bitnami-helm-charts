@@ -1,6 +1,6 @@
 # prometheus
 
-![Version: 11.2.16](https://img.shields.io/badge/Version-11.2.16-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
+![Version: 12.0.0](https://img.shields.io/badge/Version-12.0.0-informational?style=flat-square) ![AppVersion: 0.84.0](https://img.shields.io/badge/AppVersion-0.84.0-informational?style=flat-square)
 
 Prometheus Operator provides easy monitoring definitions for Kubernetes services and deployment and management of Prometheus instances.
 
@@ -285,6 +285,7 @@ Kubernetes: `>= 1.16.0-0`
 | coreDns.serviceMonitor.metricRelabelings | list | `[]` |  |
 | coreDns.serviceMonitor.relabelings | list | `[]` |  |
 | coreDns.serviceMonitor.sampleLimit | string | `""` |  |
+| enableAffinityPresets | bool | `false` |  |
 | exporters.kube-state-metrics.enabled | bool | `true` |  |
 | exporters.node-exporter.enabled | bool | `true` |  |
 | extraDeploy | list | `[]` |  |

@@ -52,6 +52,9 @@ commonLabels: {}
 ## @param commonAnnotations Add annotations to all the deployed resources
 ##
 commonAnnotations: {}
+## @param enableAffinityPresets Enable the built-in affinity presets. When `false`, the `podAffinityPreset`, `podAntiAffinityPreset` and `nodeAffinityPreset` values are ignored and no affinity is rendered unless `affinity` is set explicitly
+##
+enableAffinityPresets: false
 ## Enable diagnostic mode in the deployment/statefulset
 ##
 diagnosticMode:

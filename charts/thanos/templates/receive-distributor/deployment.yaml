@@ -54,7 +54,7 @@ spec:
       {{- end }}
       {{- if .Values.receiveDistributor.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.receiveDistributor.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.receiveDistributor.podAffinityPreset "component" "receive-distributor" "customLabels" $podLabels "context" $) | nindent 10 }}
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.receiveDistributor.podAntiAffinityPreset "component" "receive-distributor" "customLabels" $podLabels "context" $) | nindent 10 }}

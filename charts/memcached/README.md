@@ -1,6 +1,6 @@
 # memcached
 
-![Version: 7.9.7](https://img.shields.io/badge/Version-7.9.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.39](https://img.shields.io/badge/AppVersion-1.6.39-informational?style=flat-square)
+![Version: 8.0.0](https://img.shields.io/badge/Version-8.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.39](https://img.shields.io/badge/AppVersion-1.6.39-informational?style=flat-square)
 
 Memcached is an high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
 
@@ -50,6 +50,7 @@ Memcached is an high-performance, distributed memory object caching system, gene
 | diagnosticMode.command[0] | string | `"sleep"` |  |
 | diagnosticMode.enabled | bool | `false` |  |
 | emptyDir.medium | string | `""` |  |
+| enableAffinityPresets | bool | `false` |  |
 | enableServiceLinks | bool | `true` |  |
 | extraDeploy | list | `[]` |  |
 | extraEnvVars | list | `[]` |  |

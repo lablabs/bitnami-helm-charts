@@ -52,6 +52,9 @@ clusterDomain: cluster.local
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
 extraDeploy: []
+## @param enableAffinityPresets Enable the built-in affinity presets. When `false`, the `podAffinityPreset`, `podAntiAffinityPreset` and `nodeAffinityPreset` values are ignored and no affinity is rendered unless `affinity` is set explicitly
+##
+enableAffinityPresets: false
 ## @section Thanos common parameters
 
 ## Bitnami Thanos image

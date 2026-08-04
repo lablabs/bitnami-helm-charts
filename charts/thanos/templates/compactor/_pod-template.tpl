@@ -34,7 +34,7 @@ spec:
   {{- end }}
   {{- if .Values.compactor.affinity }}
   affinity: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.affinity "context" $) | nindent 4 }}
-  {{- else }}
+  {{- else if .Values.enableAffinityPresets }}
   affinity:
     podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.compactor.podAffinityPreset "component" "compactor" "customLabels" $podLabels "context" $) | nindent 6 }}
     podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.compactor.podAntiAffinityPreset "component" "compactor" "customLabels" $podLabels "context" $) | nindent 6 }}

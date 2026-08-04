@@ -65,7 +65,7 @@ spec:
       {{- end }}
       {{- if .Values.ruler.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.ruler.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.ruler.podAffinityPreset "component" "ruler" "customLabels" $podLabels "context" $) | nindent 10 }}
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.ruler.podAntiAffinityPreset "component" "ruler" "customLabels" $podLabels "context" $) | nindent 10 }}

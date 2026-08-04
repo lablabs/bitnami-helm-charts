@@ -207,7 +207,7 @@ spec:
   {{- end }}
   {{- if .Values.prometheus.affinity }}
   affinity: {{- include "common.tplvalues.render" (dict "value" .Values.prometheus.affinity "context" $) | nindent 4 }}
-  {{- else }}
+  {{- else if .Values.enableAffinityPresets }}
   affinity:
     {{- if not (empty .Values.prometheus.podAffinityPreset) }}
     podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.prometheus.podAffinityPreset "component" "prometheus" "context" $) | nindent 6 }}

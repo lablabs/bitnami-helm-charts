@@ -51,7 +51,7 @@ spec:
       {{- end }}
       {{- if .Values.bucketweb.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.bucketweb.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.bucketweb.podAffinityPreset "component" "bucketweb" "customLabels" $podLabels "context" $) | nindent 10 }}
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.bucketweb.podAntiAffinityPreset "component" "bucketweb" "customLabels" $podLabels "context" $) | nindent 10 }}

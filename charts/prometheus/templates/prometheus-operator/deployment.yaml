@@ -41,7 +41,7 @@ spec:
       {{- end }}
       {{- if .Values.operator.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.operator.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         {{- $podLabels := include "common.tplvalues.merge" ( dict "values" ( list .Values.operator.podLabels .Values.commonLabels ) "context" . ) }}
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.operator.podAffinityPreset "component" "operator" "customLabels" $podLabels "context" $) | nindent 10 }}

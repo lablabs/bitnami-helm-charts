@@ -51,7 +51,7 @@ spec:
       {{- end }}
       {{- if .Values.query.affinity }}
       affinity: {{- include "common.tplvalues.render" (dict "value" .Values.query.affinity "context" $) | nindent 8 }}
-      {{- else }}
+      {{- else if .Values.enableAffinityPresets }}
       affinity:
         podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.query.podAffinityPreset "component" "query" "customLabels" $podLabels "context" $) | nindent 10 }}
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.query.podAntiAffinityPreset "component" "query" "topologyKey" .Values.query.podAntiAffinityPresetTopologyKey "customLabels" $podLabels "context" $) | nindent 10 }}

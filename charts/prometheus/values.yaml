@@ -60,6 +60,9 @@ extraDeploy: []
 ## @param clusterDomain Kubernetes cluster domain name
 ##
 clusterDomain: cluster.local
+## @param enableAffinityPresets Enable the built-in affinity presets. When `false`, the `podAffinityPreset`, `podAntiAffinityPreset` and `nodeAffinityPreset` values are ignored and no affinity is rendered unless `affinity` is set explicitly
+##
+enableAffinityPresets: false
 ## @section Prometheus Operator Parameters
 ##
 operator:
